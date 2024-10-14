@@ -6,6 +6,7 @@ Simple client app for LLM studio to access LLM hosted locally via LM studio buil
 - Simple chat
 
 **TODO**
+- Preserve Context
 - Model Selection
 - Switch URLs
 - Error handles

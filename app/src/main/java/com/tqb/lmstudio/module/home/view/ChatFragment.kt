@@ -39,8 +39,6 @@ class ChatFragment: Fragment() {
         chatAdapter = ChatAdapter(requireContext());
         binding.rvChat.adapter = chatAdapter
         chatVm = ChatViewModelFactory().create(ChatViewModel::class.java)
-
-//        (binding.rvChat.layoutManager as LinearLayoutManager).stackFromEnd = true
     }
 
     private fun clicks() {
