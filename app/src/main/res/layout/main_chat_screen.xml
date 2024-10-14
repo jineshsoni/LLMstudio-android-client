@@ -12,7 +12,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:id="@+id/rvChat"
         tools:listitem="@layout/single_chat_ui"
-        android:paddingBottom="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/card_bottom"
         app:layout_constraintStart_toStartOf="parent"

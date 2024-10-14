@@ -1,17 +1,17 @@
 package com.tqb.lmstudio.module.home.view
 
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.tqb.lmstudio.databinding.MainChatScreenBinding
 import com.tqb.lmstudio.module.home.data.Chat
 import com.tqb.lmstudio.module.home.data.ChatBy
 import com.tqb.lmstudio.module.home.viewmodel.ChatViewModel
 import com.tqb.lmstudio.module.home.viewmodel.ChatViewModelFactory
-import java.util.concurrent.TimeUnit
+
 
 class ChatFragment: Fragment() {
 
@@ -39,14 +39,19 @@ class ChatFragment: Fragment() {
         chatAdapter = ChatAdapter(requireContext());
         binding.rvChat.adapter = chatAdapter
         chatVm = ChatViewModelFactory().create(ChatViewModel::class.java)
+
+//        (binding.rvChat.layoutManager as LinearLayoutManager).stackFromEnd = true
     }
 
     private fun clicks() {
         binding.send.setOnClickListener {
-            addChat(binding.etChat.text.toString())
+            binding.send.isEnabled = false
+            binding.etChat.isEnabled = false
+
+            addChat(binding.etChat.text.toString(), true)
             chatVm.sendChat(binding.etChat.text.toString(), success = {
                 addChat(it, false)
-                binding.etChat.text.clear()
+                binding.etChat.text?.clear()
                 scrollRv()
             })
 
@@ -57,12 +62,14 @@ class ChatFragment: Fragment() {
         chatAdapter.addChat(Chat(
             text = text,
             time = System.currentTimeMillis(),
-            chatBy = if(!isUser) ChatBy.AI else ChatBy.AI,
+            chatBy = if(isUser) ChatBy.USER else ChatBy.AI,
         ))
     }
 
     private fun scrollRv() {
         binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount)
+        binding.send.isEnabled = true
+        binding.etChat.isEnabled = true
     }
 
     override fun onDestroyView() {
